@@ -1,18 +1,18 @@
 <!-- TODO: Add ng2 specific directives/validation settings and add styling -->
 <form (ngSubmit)="doLogin(null)">
-  <div>
-    User name:
+  <div class="form-group">
+    <label for="login">User name:</label>
     <div>
-      <input pattern=".{3,}" placeholder="User" type="text" name="login" />
+      <input pattern=".{3,}" class="form-control" placeholder="User" type="text" name="login" id="login" />
       <div>Please specify your login, at least three characters.</div>
     </div>
   </div>
-  <div>
-    Password:
+  <div class="form-group">
+    <label for="password">Password:</label>
     <div>
-      <input pattern=".{3,}" placeholder="Password" type="password" name="password" />
+      <input pattern=".{3,}" class="form-control" placeholder="Password" type="password" name="password" id="password"/>
       <div>Please specify your login, at least three characters.</div>
     </div>
   </div>
-  <button>Login</button>
+  <button class="btn btn-default">Login</button>
 </form>
