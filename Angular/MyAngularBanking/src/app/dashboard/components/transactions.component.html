@@ -1,0 +1,18 @@
+<h1>Konto Bewegungen</h1>
+<div>Filter ...</div>
+<table>
+  <thead>
+    <td>Datum</td>
+    <td>Von</td>
+    <td>Zu</td>
+    <td>Betrag</td>
+    <td>Kontostand Neu</td>
+  </thead>
+  <tr *ngFor="let trans of transactions">
+    <td>{{trans.date}}</td>
+    <td>{{trans.from}}</td>
+    <td>{{trans.to}}</td>
+    <td>{{trans.amount}}</td>
+    <td>{{trans.balance}}</td>
+  </tr>
+</table>
