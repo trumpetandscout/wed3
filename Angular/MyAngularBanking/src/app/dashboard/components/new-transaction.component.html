@@ -1,0 +1,22 @@
+<h1>Neue Bewegung</h1>
+<form>
+  <div class="form-group">
+    <label for="fromAccount">Von</label>
+    <select id="fromAccount" class="form-control" disabled>
+      <option>{{account.accountNr}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="toAccount">Password</label>
+    <input type="number" class="form-control" id="toAccount" [(ngModel)]="toAccountNr" placeholder="Ziel Konto Nummer" aria-describedby="toAccountHelp">
+    <span id="toAccountHelp" class="help-block">{{getValidationTextToAccount()}}</span>
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="amount">Betrag (in Schweizerfranken)</label>
+    <div class="input-group">
+      <div class="input-group-addon">CHF</div>
+      <input type="number" class="form-control" id="amount" [(ngModel)]="amount" placeholder="Betrag">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-default">Zahlen</button>
+</form>

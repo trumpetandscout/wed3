@@ -3,7 +3,7 @@
  */
 
 import {Component} from '@angular/core';
-import {Transaction} from "../models";
+import {Transaction} from '../models';
 
 @Component({
   selector: 'wed-transactions',
@@ -11,14 +11,14 @@ import {Transaction} from "../models";
   styleUrls: ['transactions.component.scss']
 })
 export class TransactionsComponent {
-  public filter:Date;
+  public filter: Date;
   public transactions: Array<Transaction>;
 
-  constructor(){
+  constructor() {
     this.refreshData(new Date(Date.now()));
   }
 
-  private refreshData(filter:Date) {
+  private refreshData(filter: Date) {
     // transactions = repo.get(filter);
   }
 }

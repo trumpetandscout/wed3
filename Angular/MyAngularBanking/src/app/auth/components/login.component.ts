@@ -1,11 +1,11 @@
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {NgForm} from '@angular/forms';
 
-import {NavigationService} from "../../core/services/navigation.service";
+import {NavigationService} from '../../core/services/navigation.service';
 
-import {AuthService} from "../services";
-import {LoginInfo} from "../models";
+import {AuthService} from '../services';
+import {LoginInfo} from '../models';
 
 @Component({
   selector: 'wed-login',
@@ -16,17 +16,17 @@ export class LoginComponent implements OnInit {
 
   private backUrl;
 
-  public login:string;
-  public password:string;
+  public login: string;
+  public password: string;
 
-  public isProcessing:boolean = false;
+  public isProcessing: boolean = false;
 
-  constructor(private autSvc:AuthService, private navigationSvc: NavigationService, route: ActivatedRoute) {
-    route.params.subscribe((p:Params) => this.backUrl = p["backUrl"]);
+  constructor(private autSvc: AuthService, private navigationSvc: NavigationService, route: ActivatedRoute) {
+    route.params.subscribe((p: Params) => this.backUrl = p['backUrl']);
   }
 
   ngOnInit() {
-    this.backUrl = "";
+    this.backUrl = '';
     this.autSvc.authenticatedUserChange.subscribe(
       (credentials) => {
         this.isProcessing = false;
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  public doLogin(f: NgForm):boolean {
+  public doLogin(f: NgForm): boolean {
     if (f.valid) {
       this.isProcessing = true;
       this.autSvc.login(new LoginInfo(f.value.login, f.value.password));
