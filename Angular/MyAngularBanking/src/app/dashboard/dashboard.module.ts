@@ -2,15 +2,24 @@ import {NgModule, ModuleWithProviders} from '@angular/core';
 
 import {SharedModule} from "../shared/shared.module";
 
-import {DashbaordRoutingModule} from "./dashboard-routing.module";
+import {DashboardRoutingModule} from "./dashboard-routing.module";
+import {DashboardComponent} from "./components/dashboard.component";
+import {TransactionsComponent} from "./components/transactions.component";
+import {NewTransactionComponent} from "./components/new-transaction.component";
+import {LastTransactionsComponent} from "./components/last-transactions.component";
+import {HomeComponent} from "./components/home.component";
 
 @NgModule({
   declarations: [
-    // Declarations (Components / Directives) used from/within the Module
+    DashboardComponent,
+    HomeComponent,
+    TransactionsComponent,
+    NewTransactionComponent,
+    LastTransactionsComponent
   ],
   imports: [
     // Other Modules to import (imports the exported Components/Directives from the other module)
-    SharedModule, DashbaordRoutingModule
+    SharedModule, DashboardRoutingModule
   ],
   exports: [
     // Components/Directives (or even Modules) to export (available for other modules; and forRoot() )

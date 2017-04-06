@@ -5,6 +5,8 @@
 import {Component} from '@angular/core';
 import {Account} from '../../auth/models/account';
 import {Transaction} from '../models/transaction';
+import {BankingService} from "../services/banking.service";
+import {AccountService} from "../services/account.service";
 
 @Component({
   selector: 'wed-new-transaction',
@@ -18,6 +20,10 @@ export class NewTransactionComponent {
   public toAccountNr: number;
   public amount: number;
 
+  constructor(private bankSvc: BankingService, private accSvc: AccountService) {
+
+  }
+
   public isValidTransaction(): boolean {
     return false;
   }
@@ -27,6 +33,6 @@ export class NewTransactionComponent {
   }
 
   public addNewTransaction() {
-    bankSvc.addNewTransaction(new Transaction(new Date(Date.now()), account, accSvc.getAccount(toAccountNr), amount, 0));
+    this.bankSvc.addNewTransaction(new Transaction(new Date(Date.now()), this.account, this.accSvc.getAccount(this.toAccountNr), this.amount, 0));
   }
 }

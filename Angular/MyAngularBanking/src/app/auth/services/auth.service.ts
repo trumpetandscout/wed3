@@ -5,9 +5,10 @@ import {AuthResourceService} from "../resources";
 import {LoginInfo, RegistrationInfo, Credential, Account} from "../models";
 
 import {SecurityTokenStore} from "./credential-management";
+import {CanLoad} from "@angular/router";
 
 @Injectable()
-export class AuthService {
+export class AuthService implements CanLoad{
 
   public authenticatedUserChange:EventEmitter<Account> = new EventEmitter<Account>();
 
@@ -25,6 +26,10 @@ export class AuthService {
 
   public get hasCredentials():boolean {
     return !isBlank(this.authenticatedUser);
+  }
+
+  public canLoad() {
+    return this.hasCredentials;
   }
 
   public register(registerModel:RegistrationInfo):void {
