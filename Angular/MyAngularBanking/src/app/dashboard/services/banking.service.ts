@@ -2,12 +2,15 @@
  * Created by CjHome on 01.04.2017.
  */
 
-import {Injectable} from '@angular/core';
-import {Transaction} from "../models/transaction";
+import {EventEmitter, Injectable} from '@angular/core';
+import {NewTransactionInfo, Transaction} from '../models';
 
 @Injectable()
 export class BankingService {
-  public addNewTransaction(transaction: Transaction): void{
+
+  public transactionAdded:EventEmitter<Transaction> = new EventEmitter<Transaction>();
+
+  public doPay(newTransactionModel: NewTransactionInfo): void{
 
   }
 }

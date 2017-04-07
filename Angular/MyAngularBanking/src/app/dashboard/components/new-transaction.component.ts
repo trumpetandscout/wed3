@@ -2,26 +2,35 @@
  * Created by Joel on 31.03.2017.
  */
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from "@angular/forms";
 import {Account} from '../../auth/models/account';
-import {Transaction} from '../models/transaction';
-import {BankingService} from "../services/banking.service";
-import {AccountService} from "../services/account.service";
+import {Transaction} from '../models';
+
+import {AccountService, BankingService} from "../services";
+import {NewTransactionInfo} from "../models";
 
 @Component({
   selector: 'wed-new-transaction',
   templateUrl: 'new-transaction.component.html',
   styleUrls: ['new-transaction.component.scss']
 })
-export class NewTransactionComponent {
+export class NewTransactionComponent implements OnInit{
 
   public account: Account;
   public lastTransaction: Transaction;
   public toAccountNr: number;
   public amount: number;
 
-  constructor(private bankSvc: BankingService, private accSvc: AccountService) {
+  public isProcessing:boolean = false;
 
+  constructor(private bankSvc: BankingService, private accSvc: AccountService) { }
+
+  ngOnInit() {
+    this.bankSvc.transactionAdded.subscribe(
+      (transaction) => {
+        this.isProcessing = false;
+      });
   }
 
   public isValidTransaction(): boolean {
@@ -32,7 +41,13 @@ export class NewTransactionComponent {
     return 'test';
   }
 
-  public addNewTransaction() {
-    this.bankSvc.addNewTransaction(new Transaction(new Date(Date.now()), this.account, this.accSvc.getAccount(this.toAccountNr), this.amount, 0));
+  public doPay(f: NgForm):boolean {
+    if (f.valid) {
+      this.isProcessing = true;
+      this.bankSvc.doPay(new NewTransactionInfo(
+        f.value.toAccountNr,
+        f.value.amount));
+    }
+    return false;
   }
 }

@@ -8,6 +8,9 @@ import {TransactionsComponent} from "./components/transactions.component";
 import {NewTransactionComponent} from "./components/new-transaction.component";
 import {LastTransactionsComponent} from "./components/last-transactions.component";
 import {HomeComponent} from "./components/home.component";
+import {AuthModule} from "../auth/auth.module";
+import {BankingService} from "./services/banking.service";
+import {AccountService} from "./services/account.service";
 
 @NgModule({
   declarations: [
@@ -19,12 +22,14 @@ import {HomeComponent} from "./components/home.component";
   ],
   imports: [
     // Other Modules to import (imports the exported Components/Directives from the other module)
-    SharedModule, DashboardRoutingModule
+    SharedModule, DashboardRoutingModule, AuthModule
   ],
   exports: [
     // Components/Directives (or even Modules) to export (available for other modules; and forRoot() )
   ],
   providers: [
+    BankingService,
+    AccountService
     // DI Providers (Services, Tokens, Factories...), may be instantiated multiple times
   ]
 })
