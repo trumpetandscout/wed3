@@ -1,5 +1,20 @@
 <h1>Konto Bewegungen</h1>
-<div>Filter ...</div>
+<div>
+  <form #filterForm="ngForm">
+    <div class="form-group">
+      <label for="yearSelect">Wähle ein Jahr</label>
+      <select id="yearSelect" name="yearSelect" class="form-control" (change)="refresh(filterForm)" ngModel>
+        <option *ngFor="let year of years">{{year}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="monthSelect">Wähle ein Jahr</label>
+      <select id="monthSelect" name="monthSelect" class="form-control" (change)="refresh(filterForm)" ngModel>
+        <option *ngFor="let month of months">{{month}}</option>
+      </select>
+    </div>
+  </form>
+</div>
 <table>
   <thead>
   <td>Datum</td>

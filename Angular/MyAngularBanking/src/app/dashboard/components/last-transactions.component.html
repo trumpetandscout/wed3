@@ -1,3 +1,16 @@
 <h1>Letzte Bewegungen</h1>
-// Tabelle
+<table>
+  <thead>
+  <td>Von</td>
+  <td>Zu</td>
+  <td>Betrag</td>
+  <td>Kontostand Neu</td>
+  </thead>
+  <tr *ngFor="let trans of lastTransactions">
+    <td>{{trans.from}}</td>
+    <td>{{trans.to}}</td>
+    <td>{{trans.amount}}</td>
+    <td>{{trans.balance}}</td>
+  </tr>
+</table>
 <button>Alle Anzeigen</button>

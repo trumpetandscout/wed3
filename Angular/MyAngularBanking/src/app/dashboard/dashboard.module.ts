@@ -11,6 +11,7 @@ import {HomeComponent} from "./components/home.component";
 import {AuthModule} from "../auth/auth.module";
 import {BankingService} from "./services/banking.service";
 import {AccountService} from "./services/account.service";
+import {BankResourceService} from "./resources/banking-resouce.service";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {AccountService} from "./services/account.service";
   ],
   providers: [
     BankingService,
+    BankResourceService,
     AccountService
     // DI Providers (Services, Tokens, Factories...), may be instantiated multiple times
   ]

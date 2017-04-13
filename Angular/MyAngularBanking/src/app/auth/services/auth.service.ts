@@ -4,8 +4,8 @@ import {isBlank} from "@angular/core/src/facade/lang";
 import {AuthResourceService} from "../resources";
 import {LoginInfo, RegistrationInfo, Credential, Account} from "../models";
 
-import {SecurityTokenStore} from "./credential-management";
 import {CanLoad} from "@angular/router";
+import {SecurityTokenStore} from "./credential-management/security-token-store";
 
 @Injectable()
 export class AuthService implements CanLoad{

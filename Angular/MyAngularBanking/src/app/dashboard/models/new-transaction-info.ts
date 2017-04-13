@@ -3,17 +3,17 @@
  */
 
 export class NewTransactionInfo {
-  constructor(public toAccountNr: number,
+  constructor(public target: number,
               public amount: number) {
   }
 
   public static fromDto(data: any): NewTransactionInfo {
-    return new NewTransactionInfo(data.toAccountNr, data.amount);
+    return new NewTransactionInfo(data.target, data.amount);
   }
 
   toDto(): any {
     return {
-      toAccountNr: this.toAccountNr,
+      target: this.target,
       amount: this.amount
     };
   }

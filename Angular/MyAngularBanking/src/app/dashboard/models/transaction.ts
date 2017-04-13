@@ -13,16 +13,16 @@ export class Transaction {
   }
 
   public static fromDto(data: any): Transaction {
-    return new Transaction(data.date, data.from, data.to, data.amount, data.balance);
+    return new Transaction(new Date(Date.parse(data.date)), data.from, data.target, data.amount, data.total);
   }
 
   toDto(): any {
     return {
-      date: this.date,
       from: this.from,
-      to: this.to,
+      target: this.to,
       amount: this.amount,
-      balance: this.balance
+      total: this.balance,
+      date: this.date.toJSON()
     };
   }
 }

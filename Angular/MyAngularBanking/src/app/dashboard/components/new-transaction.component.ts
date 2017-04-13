@@ -18,17 +18,18 @@ import {NewTransactionInfo} from "../models";
 export class NewTransactionComponent implements OnInit{
 
   public account: Account;
-  public lastTransaction: Transaction;
   public toAccountNr: number;
   public amount: number;
 
   public isProcessing:boolean = false;
 
-  constructor(private bankSvc: BankingService, private accSvc: AccountService) { }
+  constructor(private bankSvc: BankingService, private accSvc: AccountService) {
+
+  }
 
   ngOnInit() {
     this.bankSvc.transactionAdded.subscribe(
-      (transaction) => {
+      (transacction) => {
         this.isProcessing = false;
       });
   }
@@ -41,13 +42,12 @@ export class NewTransactionComponent implements OnInit{
     return 'test';
   }
 
-  public doPay(f: NgForm):boolean {
+  public doPay(f: NgForm): void {
     if (f.valid) {
       this.isProcessing = true;
       this.bankSvc.doPay(new NewTransactionInfo(
         f.value.toAccountNr,
         f.value.amount));
     }
-    return false;
   }
 }
