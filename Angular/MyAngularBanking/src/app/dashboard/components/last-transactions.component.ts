@@ -3,8 +3,8 @@
  */
 
 import {Component} from '@angular/core';
-import {Transaction} from "../models/transaction";
-import {BankingService} from "../services/banking.service";
+import {Transaction} from "../models";
+import {BankingService} from "../services";
 
 @Component({
   selector: 'wed-last-transactions',

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {RequestOptions, Headers} from '@angular/http';
 
-import {SecurityTokenStore} from "../services/credential-management/security-token-store";
+import {SecurityTokenStore} from "../services";
 
 @Injectable()
 export class AuthRequestOptions extends RequestOptions {

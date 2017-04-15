@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {Account} from "./account";
+import {Account} from "../../shared";
 
 @Injectable()
 export class Credential {

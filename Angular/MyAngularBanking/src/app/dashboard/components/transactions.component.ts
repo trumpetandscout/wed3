@@ -4,8 +4,7 @@
 
 import {Component} from '@angular/core';
 import {Transaction} from '../models';
-import {BankingService} from "../services/banking.service";
-import {NgForm} from "@angular/forms";
+import {BankingService} from '../services';
 
 @Component({
   selector: 'wed-transactions',

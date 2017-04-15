@@ -1,17 +1,13 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 
 import {SharedModule} from "../shared/shared.module";
+import {AuthModule} from "../auth/auth.module";
 
 import {DashboardRoutingModule} from "./dashboard-routing.module";
-import {DashboardComponent} from "./components/dashboard.component";
-import {TransactionsComponent} from "./components/transactions.component";
-import {NewTransactionComponent} from "./components/new-transaction.component";
-import {LastTransactionsComponent} from "./components/last-transactions.component";
-import {HomeComponent} from "./components/home.component";
-import {AuthModule} from "../auth/auth.module";
-import {BankingService} from "./services/banking.service";
-import {AccountService} from "./services/account.service";
-import {BankResourceService} from "./resources/banking-resouce.service";
+import {DashboardComponent, TransactionsComponent, NewTransactionComponent, LastTransactionsComponent, HomeComponent} from "./components";
+
+import {BankingService, AccountService} from "./services";
+import {BankResourceService, AccountResourceService} from "./resources";
 
 @NgModule({
   declarations: [
@@ -23,7 +19,7 @@ import {BankResourceService} from "./resources/banking-resouce.service";
   ],
   imports: [
     // Other Modules to import (imports the exported Components/Directives from the other module)
-    SharedModule, DashboardRoutingModule, AuthModule
+    SharedModule, AuthModule, DashboardRoutingModule
   ],
   exports: [
     // Components/Directives (or even Modules) to export (available for other modules; and forRoot() )
@@ -31,7 +27,8 @@ import {BankResourceService} from "./resources/banking-resouce.service";
   providers: [
     BankingService,
     BankResourceService,
-    AccountService
+    AccountService,
+    AccountResourceService
     // DI Providers (Services, Tokens, Factories...), may be instantiated multiple times
   ]
 })

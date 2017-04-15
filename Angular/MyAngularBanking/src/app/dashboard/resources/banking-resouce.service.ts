@@ -4,7 +4,6 @@
 
 import {Injectable} from '@angular/core';
 import {Response, Http} from "@angular/http";
-
 import {Observable} from "rxjs";
 
 import {NewTransactionInfo, Transaction} from "../models";

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute} from "@angular/router";
 
-import {NavigationService} from "../../core/services/navigation.service";
+import {NavigationService} from "../../core/services";
 import {AuthService} from "../services";
-import {Account} from "../models";
+import {Account} from "../../shared";
+
 
 @Component({
   selector: 'wed-logout',

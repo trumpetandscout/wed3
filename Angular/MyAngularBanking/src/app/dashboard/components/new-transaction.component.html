@@ -3,7 +3,7 @@
   <div class="form-group">
     <label for="fromAccount">Von</label>
     <select id="fromAccount" class="form-control" disabled>
-      <!--<option>{{account.accountNr}}</option>-->
+      <option>{{accountDetails.accountNr}} [{{accountDetails.amount | number: '1.2-2'}}]</option>
     </select>
   </div>
   <div class="form-group">

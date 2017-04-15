@@ -2,7 +2,7 @@
  * Created by Joel on 31.03.2017.
  */
 
-import {Account} from '../../auth/models/account';
+import {Account} from '../../shared';
 
 export class Transaction {
   constructor(public date: Date,

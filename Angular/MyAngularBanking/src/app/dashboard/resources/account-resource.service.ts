@@ -1,19 +1,22 @@
+/**
+ * Created by Joel on 13.04.2017.
+ */
+
 import {Injectable} from '@angular/core';
 import {Response, Http} from "@angular/http";
-
 import {Observable} from "rxjs";
 
-import {LoginInfo, RegistrationInfo, Credential} from "../models";
 import {ResourceBase, Account} from "../../shared";
+import {AccountDetails} from "../models";
 
 @Injectable()
-export class AuthResourceService extends ResourceBase {
+export class AccountResourceService extends ResourceBase {
   constructor(http: Http) {
     super(http);
   }
 
-  public register(model:RegistrationInfo):Observable<Account> {
-    return this.post('/auth/register', model.toDto())
+  public getAccount(accountNr: number): Observable<Account> {
+    return this.get('accounts/' + accountNr)
       .map((response: Response) => {
         let result = response.json();
         if (result) {
@@ -26,17 +29,17 @@ export class AuthResourceService extends ResourceBase {
       });
   }
 
-  public login(model:LoginInfo):Observable<Credential> {
-    return this.post('/auth/login', model.toDto())
+  public getAccountDetails(): Observable<AccountDetails> {
+    return this.get('accounts')
       .map((response: Response) => {
         let result = response.json();
         if (result) {
-          return Credential.fromDto(result);
+          return AccountDetails.fromDto(result);
         }
         return null;
       })
       .catch((error:any) => {
-        return Observable.of<Credential>(null);
+        return Observable.of<AccountDetails>(null);
       });
   }
 }

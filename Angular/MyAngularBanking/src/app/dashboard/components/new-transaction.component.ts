@@ -4,11 +4,11 @@
 
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {Account} from '../../auth/models/account';
-import {Transaction} from '../models';
+
+import {Account} from '../../shared';
 
 import {AccountService, BankingService} from "../services";
-import {NewTransactionInfo} from "../models";
+import {NewTransactionInfo, AccountDetails} from "../models";
 
 @Component({
   selector: 'wed-new-transaction',
@@ -17,19 +17,23 @@ import {NewTransactionInfo} from "../models";
 })
 export class NewTransactionComponent implements OnInit{
 
-  public account: Account;
+  public accountDetails: AccountDetails;
   public toAccountNr: number;
   public amount: number;
 
   public isProcessing:boolean = false;
 
   constructor(private bankSvc: BankingService, private accSvc: AccountService) {
-
+    accSvc.getAccountDetails().subscribe(
+      (data: AccountDetails) => {
+        this.accountDetails = data;
+      }
+    )
   }
 
   ngOnInit() {
     this.bankSvc.transactionAdded.subscribe(
-      (transacction) => {
+      () => {
         this.isProcessing = false;
       });
   }

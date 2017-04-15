@@ -3,9 +3,10 @@
  */
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {NewTransactionInfo, Transaction} from '../models';
-import {BankResourceService} from "../resources/banking-resouce.service";
 import {Observable} from "rxjs";
+
+import {NewTransactionInfo, Transaction} from '../models';
+import {BankResourceService} from "../resources";
 
 @Injectable()
 export class BankingService {

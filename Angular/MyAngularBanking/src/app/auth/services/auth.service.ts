@@ -2,10 +2,11 @@ import {Injectable, EventEmitter} from '@angular/core';
 import {isBlank} from "@angular/core/src/facade/lang";
 
 import {AuthResourceService} from "../resources";
-import {LoginInfo, RegistrationInfo, Credential, Account} from "../models";
+import {LoginInfo, RegistrationInfo, Credential} from "../models";
 
 import {CanLoad} from "@angular/router";
-import {SecurityTokenStore} from "./credential-management/security-token-store";
+import {SecurityTokenStore} from "./";
+import {Account} from "../../shared";
 
 @Injectable()
 export class AuthService implements CanLoad{
