@@ -1,10 +1,10 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 
-import {SharedModule} from "../shared/shared.module";
-import {AuthModule} from "../auth/auth.module";
+import {SharedModule} from '../shared/shared.module';
+import {AuthModule} from '../auth/auth.module';
 
-import {WelcomeRoutingModule} from "./welcome-routing.module";
-import {WelcomeComponent} from "./welcome.component";
+import {WelcomeRoutingModule} from './welcome-routing.module';
+import {WelcomeComponent} from './welcome.component';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import {WelcomeComponent} from "./welcome.component";
   providers: [ ]
 })
 export class WelcomeModule {
-  static forRoot(config?:{}) : ModuleWithProviders {
+  static forRoot(config?: {}): ModuleWithProviders {
     return {
       ngModule: WelcomeModule,
       providers: [ ]

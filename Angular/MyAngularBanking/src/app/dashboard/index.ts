@@ -1,5 +1,5 @@
-export * from "./components";
-export * from "./services";
-export * from "./resources";
+export * from './components';
+export * from './services';
+export * from './resources';
 
 

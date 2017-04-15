@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-body { padding-top: 70px; }
+input.ng-pristine {
+  box-shadow: none;
+}
 
-#right-button {
-  margin-right: 0.5rem;
+.custInvalid > input {
+  box-shadow: 0px 0px 1.5px 1px red;
 }

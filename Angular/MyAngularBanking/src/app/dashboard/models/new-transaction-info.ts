@@ -3,12 +3,13 @@
  */
 
 export class NewTransactionInfo {
-  constructor(public target: number,
-              public amount: number) {
-  }
 
   public static fromDto(data: any): NewTransactionInfo {
     return new NewTransactionInfo(data.target, data.amount);
+  }
+
+  constructor(public target: number,
+              public amount: number) {
   }
 
   toDto(): any {

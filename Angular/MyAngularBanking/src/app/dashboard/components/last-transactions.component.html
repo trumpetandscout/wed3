@@ -1,16 +1,16 @@
 <h1>Letzte Bewegungen</h1>
-<table>
-  <thead>
-  <td>Von</td>
-  <td>Zu</td>
-  <td>Betrag</td>
-  <td>Kontostand Neu</td>
+<table class="table table-striped table-responsive">
+  <thead class="thead-inverse">
+    <th>Von</th>
+    <th>Zu</th>
+    <th>Betrag</th>
+    <th>Kontostand Neu</th>
   </thead>
   <tr *ngFor="let trans of lastTransactions">
-    <td>{{trans.from}}</td>
+    <th scope="row">{{trans.from}}</th>
     <td>{{trans.to}}</td>
-    <td>{{trans.amount}}</td>
-    <td>{{trans.balance}}</td>
+    <td>{{trans.amount | number: '1.2-2'}} CHF</td>
+    <td>{{trans.balance | number: '1.2-2'}} CHF</td>
   </tr>
 </table>
 <button>Alle Anzeigen</button>

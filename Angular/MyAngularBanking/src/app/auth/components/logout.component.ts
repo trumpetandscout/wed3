@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import { ActivatedRoute} from "@angular/router";
+import { ActivatedRoute} from '@angular/router';
 
-import {NavigationService} from "../../core/services";
-import {AuthService} from "../services";
-import {Account} from "../../shared";
+import {NavigationService} from '../../core/services';
+import {AuthService} from '../services';
+import {Account} from '../../shared';
 
 
 @Component({
@@ -13,9 +13,9 @@ import {Account} from "../../shared";
 })
 export class LogoutComponent implements OnInit {
 
-  public user:Account;
+  public user: Account;
 
-  constructor(private autSvc:AuthService, private navigationSvc: NavigationService, route: ActivatedRoute) {
+  constructor(private autSvc: AuthService, private navigationSvc: NavigationService, route: ActivatedRoute) {
   }
 
   ngOnInit() {

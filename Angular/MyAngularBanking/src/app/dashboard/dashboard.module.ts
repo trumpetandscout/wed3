@@ -1,13 +1,13 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 
-import {SharedModule} from "../shared/shared.module";
-import {AuthModule} from "../auth/auth.module";
+import {SharedModule} from '../shared/shared.module';
+import {AuthModule} from '../auth/auth.module';
 
-import {DashboardRoutingModule} from "./dashboard-routing.module";
-import {DashboardComponent, TransactionsComponent, NewTransactionComponent, LastTransactionsComponent, HomeComponent} from "./components";
+import {DashboardRoutingModule} from './dashboard-routing.module';
+import {DashboardComponent, TransactionsComponent, NewTransactionComponent, LastTransactionsComponent, HomeComponent} from './components';
 
-import {BankingService, AccountService} from "./services";
-import {BankResourceService, AccountResourceService} from "./resources";
+import {BankingService, AccountService} from './services';
+import {BankResourceService, AccountResourceService} from './resources';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import {BankResourceService, AccountResourceService} from "./resources";
   ]
 })
 export class DashboardModule {
-  static forRoot(config?:{}) : ModuleWithProviders {
+  static forRoot(config?: {}): ModuleWithProviders {
     return {
       ngModule: DashboardModule,
       providers: [ ]
