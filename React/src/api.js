@@ -31,7 +31,7 @@ export type Transaction = {
  * If necessary, adapt the backend address below:
  */
 
-const backend = 'http://localhost:3000'
+const backend = 'http://localhost:3001';
 
 export function login(
   login: string, 
@@ -86,8 +86,8 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
-    const error: Object = new Error(response.statusText)
-    error.response = response
+    const error: Object = new Error(response.statusText);
+    error.response = response;
     throw error
   }
 }

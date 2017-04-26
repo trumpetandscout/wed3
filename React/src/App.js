@@ -25,12 +25,12 @@ class App extends React.Component {
     isAuthenticated: boolean,
     token: ?string,
     user: ?User,
-  }
+  };
   
   constructor(props: any) {
-    super(props)
-    const token = sessionStorage.getItem('token')
-    const user = sessionStorage.getItem('user')
+    super(props);
+    const token = sessionStorage.getItem('token');
+    const user = sessionStorage.getItem('user');
     if(token && user) {
       this.state = {
         isAuthenticated: true,
@@ -49,23 +49,23 @@ class App extends React.Component {
   authenticate = (login: string, password: string, cb: (error: ?Error) => void) => {
     api.login(login, password)
       .then(({token, owner}) => {
-        this.setState({isAuthenticated: true, token, user: owner})
-        sessionStorage.setItem('token', token)
-        sessionStorage.setItem('user', JSON.stringify(owner))
+        this.setState({isAuthenticated: true, token, user: owner});
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('user', JSON.stringify(owner));
         cb(null)
       })
       .catch(error => cb(error))
-  }
+  };
   
   signout = (callback: () => void) => {
-    this.setState({isAuthenticated: false, token: undefined, user: undefined})
-    sessionStorage.removeItem('token')
-    sessionStorage.removeItem('user')
+    this.setState({isAuthenticated: false, token: undefined, user: undefined});
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     callback()
-  }
+  };
   
   render() {
-    const { isAuthenticated, user, token } = this.state
+    const { isAuthenticated, user, token } = this.state;
         
     const MenuBar = withRouter(({ history, location: { pathname } }) => {
       if(isAuthenticated && user) {
@@ -77,7 +77,7 @@ class App extends React.Component {
             <Link to="/dashboard">Kontoübersicht</Link>
             <Link to="/transactions">Zahlungen</Link>
             <a href="/logout" onClick={(event) => {
-              event.preventDefault()
+              event.preventDefault();
               this.signout(() => history.push('/'))
             }}>Logout {user.firstname} {user.lastname}</a>
           </nav>
@@ -85,7 +85,7 @@ class App extends React.Component {
       } else {
         return null
       }
-    })
+    });
     
     return (
       <Router>

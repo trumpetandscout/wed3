@@ -18,37 +18,37 @@ export type Props = {
 
 class Login extends React.Component {
   
-  props: Props
+  props: Props;
   
   state: {
     login: string,
     password: string,
     error?: Error,
     redirectToReferrer: boolean,
-  }
+  };
   
   state = {
     login: "",
     password: "",
     error: undefined,
     redirectToReferrer: false,
-  }
+  };
 
   handleLoginChanged = (event: Event) => {
     if(event.target instanceof HTMLInputElement) {
       this.setState({login: event.target.value})
     }
-  }
+  };
 
   handlePasswordChanged = (event: Event) => {
     if(event.target instanceof HTMLInputElement) {
       this.setState({password: event.target.value})
     }
-  }
+  };
 
   handleSubmit = (event: Event) => {
-    event.preventDefault()
-    const { login, password } = this.state
+    event.preventDefault();
+    const { login, password } = this.state;
     this.props.authenticate(login, password, (error) => {
       if(error) {
         this.setState({error})
@@ -56,11 +56,11 @@ class Login extends React.Component {
         this.setState({redirectToReferrer: true, error: null})
       }
     })
-  }
+  };
 
   render() {
-    const { from } = this.props.location.state || { from: { pathname: '/dashboard' } }
-    const { redirectToReferrer, error } = this.state
+    const { from } = this.props.location.state || { from: { pathname: '/dashboard' } };
+    const { redirectToReferrer, error } = this.state;
     
     if (redirectToReferrer) {
       return (
