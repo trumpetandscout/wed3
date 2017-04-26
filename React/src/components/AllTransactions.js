@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import type {Transaction, User} from '../api'
+import type {getTransactions, Transaction, User} from '../api'
 
 export type Props = {
   token: string,
@@ -11,9 +11,9 @@ export type Props = {
 
 function SelectElement(props) {
   const listOptions = (content) => <option>{content}</option>;
-  return <div class="form-group">
+  return <div className="form-group">
     <label for={props.name}>props.label</label>
-    <select id={props.name} name={props.name} class="form-control" onChange={props.onChange} selected={props.selected} >
+    <select id={props.name} name={props.name} className="form-control" onChange={props.onChange} selected={props.selected} >
       {props.options.map(listOptions)}
     </select>
   </div>;
@@ -21,14 +21,14 @@ function SelectElement(props) {
 
 function TransactionsTable({transactions}) {
   const tableEntry = (trans: Transaction) => <tr>
-      <th>{trans.date}</th>
+      <th scope="row">{new Date(Date.parse(trans.date)).toDateString()}</th>
       <td>{trans.from}</td>
       <td>{trans.target}</td>
-      <td>{trans.amount}</td>
-      <td>{trans.total}</td>
+      <td>{trans.amount.toFixed(2)} CHF</td>
+      <td>{trans.total.toFixed(2)} CHF</td>
     </tr>;
-  return <table>
-    <thead>
+  return <table className="table table-striped table-responsive">
+    <thead className="thead-inverse">
       <th>Datum</th>
       <th>Von</th>
       <th>Zu</th>
@@ -55,6 +55,20 @@ class AllTransactions extends React.Component {
     transactions: []
   };
 
+  constructor(props) {
+    super(props);
+    this.props = props;
+    this.setState({month: new Date(Date.now()).getMonth()});
+    const fromDate = new Date(this.years[this.state.year], this.state.month, 1, 0, 0, 0, 0);
+    let toDate;
+    if (this.state.month === 11) {
+      toDate = new Date(this.years[this.state.year] + 1, 0, 1, 0, 0, 0, 0);
+    } else {
+      toDate = new Date(this.years[this.state.year], this.state.month + 1, 1, 0, 0, 0, 0);
+    }
+    getTransactions(props.token, fromDate.toJSON(), toDate.toJSON()).then(result => this.setState({transactions: result}));
+  }
+
   handleYearChanged = (event: Event) => {
     if(event.target instanceof HTMLInputElement) {
       this.setState({year: event.target.value})
@@ -69,18 +83,20 @@ class AllTransactions extends React.Component {
   
   render() {
     return (
-        <div>
-          <h1>Konto Bewegungen</h1>
-          <div>
+      <div className="container">
+        <div className="card">
+          <h1 className="card-header">Konto Bewegungen</h1>
+          <div className="card-block">
             <form>
-              <SelectElement name="yearSelect" options={this.years} onChange={this.handleYearChanged}
+              <SelectElement name="yearSelect" options={this.years} onChange={this.handleYearChanged.bind(this)}
                              selected={this.state.year} label="Wähle ein Jahr"/>
-              <SelectElement name="monthSelect" options={this.months} onChange={this.handleMonthChanged}
+              <SelectElement name="monthSelect" options={this.months} onChange={this.handleMonthChanged.bind(this)}
                              selected={this.state.month} label="Wähle einen Monat"/>
             </form>
+            <TransactionsTable transactions={this.state.transactions}/>
           </div>
-          <TransactionsTable transactions={this.state.transactions}/>
         </div>
+      </div>
     )
   }
 }

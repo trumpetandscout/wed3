@@ -2,14 +2,14 @@
 
 /* Type Definitions for Flow, can be ignored if Flow is not used. */
 
-export type AccountNr = string
+export type AccountNr = string;
 
 export type User = {
   login: string,
   firstname: string,
   lastname: string,
   accountNr: AccountNr,
-}
+};
 
 export type TransferResult = {
   from: AccountNr,
@@ -17,7 +17,7 @@ export type TransferResult = {
   amount: number,
   total: number,
   date: string,
-}
+};
 
 export type Transaction = {
   from: AccountNr,
@@ -25,7 +25,13 @@ export type Transaction = {
   amount: number,
   total: number,
   date: string,
-}
+};
+
+export type AccountDetails = {
+  accountNr: string,
+  amount: number,
+  owner: User,
+};
 
 /* Use the exported functions to call the API. 
  * If necessary, adapt the backend address below:
@@ -51,7 +57,7 @@ export function signup(
 
 export function getAccountDetails(
   token: string,
-): Promise<{accountNr: string, amount: number, owner: User}> {
+): Promise<AccountDetails> {
   return getAuthenticatedJson(`/accounts`, token).then(parseJSON)
 }
 

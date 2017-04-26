@@ -1,18 +1,8 @@
 // @flow
 
 import React from 'react'
-
-/*
-  Use the api functions to call the API server. For example, the transactions
-  can be retrieved and stored in the state as follows:
-  
-  getTransactions(this.props.token)
-    .then(({result: transactions}) => 
-      this.setState({transactions})
-    )
-    
-  import { getAccountDetails, getAccount, transfer, getTransactions } from '../api'
-*/
+import LastTransactions from "./LastTransactions";
+import NewTransaction from "./NewTransaction";
 
 export type Props = {
   token: string,
@@ -21,12 +11,24 @@ export type Props = {
 class Dashboard extends React.Component {
   
   props: Props;
+
+  constructor(props) {
+    super(props);
+    this.props = props;
+  }
   
   render() {    
 
     return (
-      <div>
-        This is the dashboard
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-4">
+            <NewTransaction token={this.props.token} />
+          </div>
+          <div className="col-md-8">
+            <LastTransactions token={this.props.token} />
+          </div>
+        </div>
       </div>
     )
   }
