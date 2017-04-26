@@ -1,31 +1,31 @@
 import {Injectable, EventEmitter} from '@angular/core';
-import {isBlank} from "@angular/core/src/facade/lang";
+import {isBlank} from '@angular/core/src/facade/lang';
 
-import {AuthResourceService} from "../resources";
-import {LoginInfo, RegistrationInfo, Credential} from "../models";
+import {AuthResourceService} from '../resources';
+import {LoginInfo, RegistrationInfo, Credential} from '../models';
 
-import {CanLoad} from "@angular/router";
-import {SecurityTokenStore} from "./";
-import {Account} from "../../shared";
+import {CanLoad} from '@angular/router';
+import {SecurityTokenStore} from './credential-management';
+import {Account} from '../../shared';
 
 @Injectable()
-export class AuthService implements CanLoad{
+export class AuthService implements CanLoad {
 
-  public authenticatedUserChange:EventEmitter<Account> = new EventEmitter<Account>();
+  public authenticatedUserChange: EventEmitter<Account> = new EventEmitter<Account>();
 
-  public get authenticatedUser():Account {
+  public get authenticatedUser(): Account {
     return this.authUser;
   }
 
-  private authUser:Account = null;
+  private authUser: Account = null;
 
-  constructor(private resource:AuthResourceService, private tokenStore:SecurityTokenStore) {
+  constructor(private resource: AuthResourceService, private tokenStore: SecurityTokenStore) {
     if (tokenStore.storedValue) {
       this.authUser = tokenStore.storedValue.owner;
     }
   }
 
-  public get hasCredentials():boolean {
+  public get hasCredentials(): boolean {
     return !isBlank(this.authenticatedUser);
   }
 
@@ -33,23 +33,23 @@ export class AuthService implements CanLoad{
     return this.hasCredentials;
   }
 
-  public register(registerModel:RegistrationInfo):void {
+  public register(registerModel: RegistrationInfo): void {
     this.resource.register(registerModel).subscribe(
-      (data:Account) => {
+      (data: Account) => {
         this.login(registerModel);
       } );
   }
 
-  public login(loginModel:LoginInfo):void {
+  public login(loginModel: LoginInfo): void {
     this.resource.login(loginModel).subscribe(
-      (data:Credential) => {
+      (data: Credential) => {
         this.tokenStore.storedValue = data;
-        this.authUser = !isBlank(data)? data.owner : null;
+        this.authUser = !isBlank(data) ? data.owner : null;
         this.authenticatedUserChange.emit(this.authenticatedUser);
       } );
   }
 
-  public logout():void {
+  public logout(): void {
     this.tokenStore.storedValue = null;
     this.authUser = null;
     this.authenticatedUserChange.emit(null);

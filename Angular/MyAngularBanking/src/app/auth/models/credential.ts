@@ -1,16 +1,17 @@
 import {Injectable} from '@angular/core';
 
-import {Account} from "../../shared";
+import {Account} from '../../shared';
 
 @Injectable()
 export class Credential {
-  constructor(
-    public token: string,
-    public owner: Account) {
-  }
 
   public static fromDto(data: any): Credential {
     return new Credential(data.token, Account.fromDto(data.owner));
+  }
+
+  constructor(
+    public token: string,
+    public owner: Account) {
   }
 
   toDto(): any {

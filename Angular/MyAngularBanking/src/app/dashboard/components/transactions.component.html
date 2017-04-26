@@ -3,31 +3,31 @@
   <form #filterForm="ngForm">
     <div class="form-group">
       <label for="yearSelect">Wähle ein Jahr</label>
-      <select id="yearSelect" name="yearSelect" class="form-control" (change)="refresh(filterForm)" ngModel>
-        <option *ngFor="let year of years">{{year}}</option>
+      <select id="yearSelect" name="yearSelect" class="form-control" (change)="refresh(filterForm)" [(ngModel)]="selectedYear" required>
+        <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="monthSelect">Wähle ein Jahr</label>
-      <select id="monthSelect" name="monthSelect" class="form-control" (change)="refresh(filterForm)" ngModel>
-        <option *ngFor="let month of months">{{month}}</option>
+      <label for="monthSelect">Wähle einen Monat</label>
+      <select id="monthSelect" name="monthSelect" class="form-control" (change)="refresh(filterForm)" [(ngModel)]="selectedMonth" required>
+        <option *ngFor="let month of months" [ngValue]="months.indexOf(month)">{{month}}</option>
       </select>
     </div>
   </form>
 </div>
-<table>
-  <thead>
-  <td>Datum</td>
-  <td>Von</td>
-  <td>Zu</td>
-  <td>Betrag</td>
-  <td>Kontostand Neu</td>
+<table class="table table-striped table-responsive">
+  <thead class="thead-inverse">
+    <th>Datum</th>
+    <th>Von</th>
+    <th>Zu</th>
+    <th>Betrag</th>
+    <th>Kontostand Neu</th>
   </thead>
   <tr *ngFor="let trans of transactions">
-    <td>{{trans.date}}</td>
+    <th scope="row">{{trans.date | date: 'shortDate'}}</th>
     <td>{{trans.from}}</td>
     <td>{{trans.to}}</td>
-    <td>{{trans.amount}}</td>
-    <td>{{trans.balance}}</td>
+    <td>{{trans.amount | number: '1.2-2'}} CHF</td>
+    <td>{{trans.balance | number: '1.2-2'}} CHF</td>
   </tr>
 </table>

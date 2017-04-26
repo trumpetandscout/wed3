@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {NgForm} from '@angular/forms';
 
-import {NavigationService} from "../../core/services";
+import {NavigationService} from '../../core/services';
 
-import {AuthService} from "../services";
-import {RegistrationInfo} from "../models";
+import {AuthService} from '../services';
+import {RegistrationInfo} from '../models';
 
 @Component({
   selector: 'wed-register',
@@ -13,14 +13,14 @@ import {RegistrationInfo} from "../models";
 })
 export class RegisterComponent implements OnInit {
 
-  public login:string;
-  public password:string;
-  public firstname:string;
-  public lastname:string;
+  public login: string;
+  public password: string;
+  public firstname: string;
+  public lastname: string;
 
-  public isProcessing:boolean = false;
+  public isProcessing = false;
 
-  constructor(private autSvc:AuthService, private navigationSvc: NavigationService) {
+  constructor(private autSvc: AuthService, private navigationSvc: NavigationService) {
   }
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
       });
   }
 
-  public doRegister(f: NgForm):boolean {
+  public doRegister(f: NgForm): boolean {
     if (f.valid) {
       this.isProcessing = true;
       this.autSvc.register(new RegistrationInfo(

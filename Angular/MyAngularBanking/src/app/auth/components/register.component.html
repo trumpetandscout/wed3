@@ -1,38 +1,37 @@
-<form (ngSubmit)="doRegister(registerForm)" #registerForm="ngForm">
-  <div>
-    First name:
-    <div>
-      <input pattern=".{2,}" placeholder="First name" type="text" name="firstname" ngModel/>
-      <div>Please specify your first name.</div>
+<h1 class="card-header">Registrierung</h1>
+<div class="card-block">
+  <form (ngSubmit)="doRegister(registerForm)" #registerForm="ngForm">
+    <div class="form-group">
+      <label for="inputFirstName">Vorname</label>
+      <input pattern=".{2,}" placeholder="Vorname" type="text" name="firstname" ngModel required
+             class="form-control" id="inputFirstName" aria-describedby="firstNameHelp" #firstname="ngModel"/>
+      <small [hidden]="firstname.valid" id="firstNameHelp" class="form-text text-muted">Bitte geben Sie Ihren Vornamen ein.</small>
     </div>
-  </div>
-  <div>
-    Last name:
-    <div>
-      <input pattern=".{2,}" placeholder="Last name" type="text" name="lastname" ngModel/>
-      <div>Please specify your last name.</div>
+    <div class="form-group">
+      <label for="inputLastName">Nachname</label>
+      <input pattern=".{2,}" placeholder="Nachname" type="text" name="lastname" ngModel required
+             class="form-control" id="inputLastName" aria-describedby="lastNameHelp" #lastname="ngModel"/>
+      <small [hidden]="lastname.valid" id="lastNameHelp" class="form-text text-muted">Bitte geben Sie Ihren Nachnamen ein.</small>
     </div>
-  </div>
-  <div>
-    User name:
-    <div>
-      <input pattern=".{3,}" placeholder="User" type="text" name="login" ngModel/>
-      <div>Please specify your login, at least three characters.</div>
+    <div class="form-group">
+      <label for="inputLogin">Benutzername</label>
+      <input pattern=".{3,}" placeholder="Benutzername" type="text" name="login" ngModel required
+             class="form-control" id="inputLogin" aria-describedby="loginHelp" #login="ngModel"/>
+      <small [hidden]="login.valid" id="loginHelp" class="form-text text-muted">Bitte geben Sie Ihren Benutzernamen ein, mindestens 3 Zeichen</small>
     </div>
-  </div>
-  <div>
-    Password:
-    <div>
-      <input pattern=".{3,}" placeholder="Password" type="password" name="password" ngModel/>
-      <div>Please specify your password, at least three characters.</div>
+    <div class="form-group">
+      <label for="inputPassword">Passwort</label>
+      <input pattern=".{3,}" placeholder="Passwort" type="password" name="password" ngModel required
+             class="form-control" id="inputPassword" aria-describedby="passwordHelp" #password="ngModel"/>
+      <small [hidden]="password.valid" id="passwordHelp" class="form-text text-muted">Bitte geben Sie Ihren Passwort ein, mindestens 3 Zeichen</small>
     </div>
-  </div>
-  <div>
-    Confirm Password:
-    <div>
-      <input pattern=".{3,}" placeholder="Password" type="password" name="passwordConfirm" />
-      <div>Please confirm your password.</div>
+    <div class="form-group" [ngClass]="{'custInvalid': passwordConf.value != password.value && passwordConf.valid}">
+      <label for="inputPasswordConfirm">Passwort bestätigen</label>
+      <input pattern=".{3,}" placeholder="Passwort" type="password" name="passwordConfirm" ngModel required
+             class="form-control" id="inputPasswordConfirm" aria-describedby="passwordConfirmHelp" #passwordConf="ngModel"/>
+      <small [hidden]="passwordConf.valid" id="passwordConfirmHelp" class="form-text text-muted">Bitte bestätigen Sie Ihr Passwort</small>
+      <small [hidden]="!passwordConf.valid || passwordConf.value == password.value" class="form-text text-muted">Die Passwörter stimmen nicht überein</small>
     </div>
-  </div>
-  <button>Register</button>
-</form>
+    <button class="btn btn-primary" [disabled]="!registerForm.form.valid || passwordConf.value != password.value">Register</button>
+  </form>
+</div>

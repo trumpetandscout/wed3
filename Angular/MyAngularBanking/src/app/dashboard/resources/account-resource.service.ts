@@ -3,11 +3,16 @@
  */
 
 import {Injectable} from '@angular/core';
-import {Response, Http} from "@angular/http";
-import {Observable} from "rxjs";
+import {Response, Http} from '@angular/http';
 
-import {ResourceBase, Account} from "../../shared";
-import {AccountDetails} from "../models";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
+
+
+import {ResourceBase} from '../../shared';
+import {AccountDetails, AccountName} from '../models';
 
 @Injectable()
 export class AccountResourceService extends ResourceBase {
@@ -15,30 +20,30 @@ export class AccountResourceService extends ResourceBase {
     super(http);
   }
 
-  public getAccount(accountNr: number): Observable<Account> {
-    return this.get('accounts/' + accountNr)
+  public getAccount(accountNr: number): Observable<AccountName> {
+    return this.get('/accounts/' + accountNr)
       .map((response: Response) => {
-        let result = response.json();
+        const result = response.json();
         if (result) {
-          return Account.fromDto(result);
+          return AccountName.fromDto(result);
         }
         return null;
       })
-      .catch((error:any) => {
-        return Observable.of<Account>(null);
+      .catch((error: any) => {
+        return Observable.of<AccountName>(null);
       });
   }
 
   public getAccountDetails(): Observable<AccountDetails> {
-    return this.get('accounts')
+    return this.get('/accounts/')
       .map((response: Response) => {
-        let result = response.json();
+        const result = response.json();
         if (result) {
           return AccountDetails.fromDto(result);
         }
         return null;
       })
-      .catch((error:any) => {
+      .catch((error: any) => {
         return Observable.of<AccountDetails>(null);
       });
   }

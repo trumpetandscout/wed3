@@ -1,11 +1,11 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
-import {RequestOptions} from "@angular/http";
+import {RequestOptions} from '@angular/http';
 
-import {AuthService, SecurityTokenStore} from "./services";
-import {AuthResourceService, AuthRequestOptions} from "./resources";
+import {AuthService, SecurityTokenStore} from './services';
+import {AuthResourceService, AuthRequestOptions} from './resources';
 
-import {LoginComponent, LogoutComponent, RegisterComponent} from "./components";
-import {SharedModule} from "../shared/shared.module";
+import {LoginComponent, LogoutComponent, RegisterComponent} from './components';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [
