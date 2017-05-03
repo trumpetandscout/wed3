@@ -24,14 +24,14 @@ class Login extends React.Component {
     login: string,
     password: string,
     error?: Error,
-    redirectToReferrer: boolean,
+    redirectToReferrer: boolean
   };
   
   state = {
     login: "",
     password: "",
     error: undefined,
-    redirectToReferrer: false,
+    redirectToReferrer: false
   };
 
   handleLoginChanged = (event: Event) => {
@@ -51,7 +51,7 @@ class Login extends React.Component {
     const { login, password } = this.state;
     this.props.authenticate(login, password, (error) => {
       if(error) {
-        this.setState({error})
+        this.setState({error});
       } else {
         this.setState({redirectToReferrer: true, error: null})
       }

@@ -15,6 +15,7 @@ import {BankResourceService} from '../resources';
 @Injectable()
 export class BankingService {
   public transactionAdded: EventEmitter<Transaction> = new EventEmitter<Transaction>();
+  public payFailed: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private resource: BankResourceService) {
   }
@@ -24,6 +25,9 @@ export class BankingService {
       (data: Transaction) => {
         if (data) {
           this.transactionAdded.emit(data);
+        }
+        else {
+          this.payFailed.emit();
         }
       });
   }

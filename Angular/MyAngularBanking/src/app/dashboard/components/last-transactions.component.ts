@@ -2,7 +2,7 @@
  * Created by Joel on 31.03.2017.
  */
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Transaction} from '../models';
 import {BankingService} from '../services';
 
@@ -11,7 +11,7 @@ import {BankingService} from '../services';
   templateUrl: 'last-transactions.component.html',
   styleUrls: ['last-transactions.component.scss']
 })
-export class LastTransactionsComponent {
+export class LastTransactionsComponent implements OnInit {
   public lastTransactions: Array<Transaction>;
 
   constructor(private bankSvc: BankingService) {
@@ -20,5 +20,16 @@ export class LastTransactionsComponent {
         this.lastTransactions = data;
       }
     );
+  }
+
+  ngOnInit() {
+    this.bankSvc.transactionAdded.subscribe(
+      (transaction: Transaction) => {
+        this.bankSvc.getLastN(3).subscribe(
+          (data: Array<Transaction>) => {
+            this.lastTransactions = data;
+          }
+        );
+      });
   }
 }

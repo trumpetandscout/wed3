@@ -34,7 +34,7 @@ export class TransactionsComponent {
 
   public refresh(f: NgForm) {
     if (f.form.valid) {
-      this.bankSvc.doFilter(new Date(f.value.yearSelect, f.value.monthSelect , 1, 2, 0, 0, 0)).subscribe(
+      this.bankSvc.doFilter(new Date(f.value.yearSelect, f.value.monthSelect , 1, 0, 0, 0, 0)).subscribe(
         (data: Array<Transaction>) => {
           this.transactions = data;
         }

@@ -2,25 +2,37 @@
 
 import React from 'react'
 
-import type {getTransactions, Transaction, User} from '../api'
+import type { Transaction, User} from '../api'
+import {getTransactionsByDate} from '../api'
+
 
 export type Props = {
   token: string,
   user: User,
 }
 
-function SelectElement(props) {
-  const listOptions = (content) => <option>{content}</option>;
+function YearSelect(props) {
+  const listOptions = (content, index) => <option key={index} value={index}>{content}</option>;
   return <div className="form-group">
-    <label for={props.name}>props.label</label>
-    <select id={props.name} name={props.name} className="form-control" onChange={props.onChange} selected={props.selected} >
-      {props.options.map(listOptions)}
+    <label htmlFor="yearSelect">Wähle ein Jahr</label>
+    <select id="yearSelect" name="yearSelect" className="form-control" onChange={props.handleYearChanged}>
+      {props.years.map(listOptions)}
+    </select>
+  </div>;
+}
+
+function MonthSelect(props) {
+  const listOptions = (content, index) => <option key={index} value={index}>{content}</option>;
+  return <div className="form-group">
+    <label htmlFor="monthSelect">Wähle einen Monat</label>
+    <select id="monthSelect" name="monthSelect" className="form-control" onChange={props.handleMonthChanged} value={props.month}>
+      {props.months.map(listOptions)}
     </select>
   </div>;
 }
 
 function TransactionsTable({transactions}) {
-  const tableEntry = (trans: Transaction) => <tr>
+  const tableEntry = (trans: Transaction, index) => <tr key={index}>
       <th scope="row">{new Date(Date.parse(trans.date)).toDateString()}</th>
       <td>{trans.from}</td>
       <td>{trans.target}</td>
@@ -29,13 +41,17 @@ function TransactionsTable({transactions}) {
     </tr>;
   return <table className="table table-striped table-responsive">
     <thead className="thead-inverse">
-      <th>Datum</th>
-      <th>Von</th>
-      <th>Zu</th>
-      <th>Betrag</th>
-      <th>Kontostand Neu</th>
+      <tr>
+        <th>Datum</th>
+        <th>Von</th>
+        <th>Zu</th>
+        <th>Betrag</th>
+        <th>Kontostand Neu</th>
+      </tr>
     </thead>
-    {transactions.map(tableEntry)}
+    <tbody>
+     {transactions.map(tableEntry)}
+    </tbody>
   </table>
 }
 
@@ -48,17 +64,21 @@ class AllTransactions extends React.Component {
   state: {
     year: number,
     month: number,
-    transactions: Array<Transaction>,
-  } = {
+    transactions: Transaction[],
+  };
+
+  state = {
     year: 0,
-    month: 0,
+    month: new Date().getMonth(),
     transactions: []
   };
 
   constructor(props) {
     super(props);
     this.props = props;
-    this.setState({month: new Date(Date.now()).getMonth()});
+  }
+
+  loadTransactions = () => {
     const fromDate = new Date(this.years[this.state.year], this.state.month, 1, 0, 0, 0, 0);
     let toDate;
     if (this.state.month === 11) {
@@ -66,18 +86,25 @@ class AllTransactions extends React.Component {
     } else {
       toDate = new Date(this.years[this.state.year], this.state.month + 1, 1, 0, 0, 0, 0);
     }
-    getTransactions(props.token, fromDate.toJSON(), toDate.toJSON()).then(result => this.setState({transactions: result}));
+
+    getTransactionsByDate(this.props.token, fromDate.toJSON(), toDate.toJSON()).then(result => this.setState({transactions: result.result}));
+  };
+
+  componentDidMount() {
+    this.loadTransactions.bind(this)();
   }
 
   handleYearChanged = (event: Event) => {
     if(event.target instanceof HTMLInputElement) {
-      this.setState({year: event.target.value})
+      this.setState({year: event.target.value});
+      this.loadTransactions.bind(this)();
     }
   };
 
   handleMonthChanged = (event: Event) => {
     if(event.target instanceof HTMLInputElement) {
-      this.setState({month: event.target.value})
+      this.setState({month: event.target.value});
+      this.loadTransactions.bind(this)();
     }
   };
   
@@ -88,10 +115,10 @@ class AllTransactions extends React.Component {
           <h1 className="card-header">Konto Bewegungen</h1>
           <div className="card-block">
             <form>
-              <SelectElement name="yearSelect" options={this.years} onChange={this.handleYearChanged.bind(this)}
-                             selected={this.state.year} label="Wähle ein Jahr"/>
-              <SelectElement name="monthSelect" options={this.months} onChange={this.handleMonthChanged.bind(this)}
-                             selected={this.state.month} label="Wähle einen Monat"/>
+              <YearSelect years={this.years} year={this.state.year}
+                          handleYearChanged={this.handleYearChanged.bind(this)}/>
+              <MonthSelect months={this.months} month={this.state.month}
+                           handleMonthChanged={this.handleMonthChanged.bind(this)}/>
             </form>
             <TransactionsTable transactions={this.state.transactions}/>
           </div>

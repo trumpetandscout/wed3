@@ -88,6 +88,17 @@ export function getTransactions(
     token).then(parseJSON)
 }
 
+export function getTransactionsByDate(
+  token: string,
+  fromDate: string = "",
+  toDate: string = "",
+): Promise<{result: Array<Transaction>, query: { resultcount: number}}> {
+  return getAuthenticatedJson(
+    `/accounts/transactions?fromDate=${fromDate}&toDate=${toDate}`,
+    token).then(parseJSON)
+}
+
+
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response

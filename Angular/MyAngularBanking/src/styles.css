@@ -6,3 +6,11 @@ input.ng-pristine {
 .custInvalid > input {
   box-shadow: 0px 0px 1.5px 1px red;
 }
+
+.card {
+  margin-top: 15px;
+}
+
+.table {
+  display: table;
+}

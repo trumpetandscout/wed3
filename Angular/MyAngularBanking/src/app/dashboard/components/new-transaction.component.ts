@@ -47,7 +47,17 @@ export class NewTransactionComponent implements OnInit {
             this.submitBalance = transaction.balance;
             this.submitted = true;
             this.isProcessing = false;
+            this.accSvc.getAccountDetails().subscribe(
+              (data: AccountDetails) => {
+                this.ownAccountDetails = data;
+              }
+            );
           });
+      });
+    this.bankSvc.payFailed.subscribe(
+      () => {
+        this.isProcessing = false;
+        //...
       });
   }
 

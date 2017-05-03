@@ -5,7 +5,8 @@
 
 import React from 'react'
 
-import type {getTransactions, Transaction} from '../api'
+import type { Transaction} from '../api'
+import {getTransactions} from '../api'
 
 import { Link } from 'react-router-dom'
 
@@ -13,22 +14,31 @@ export type Props = {
   token: string,
 }
 
-function TransactionsTable({transactions}) {
-  const tableEntry = (trans: Transaction) => <tr>
-    <th scope="row">{trans.from}</th>
-    <td>{trans.target}</td>
-    <td>{trans.amount.toFixed(2)} CHF</td>
-    <td>{trans.total.toFixed(2)} CHF</td>
-  </tr>;
-  return <table className="table table-striped table-responsive">
+function TransactionsTable(props) {
+
+  const tableEntry = (trans: Transaction, index) =>
+    <tr key={index}>
+      <th scope="row">{trans.from}</th>
+      <td>{trans.target}</td>
+      <td>{trans.amount.toFixed(2)} CHF</td>
+      <td>{trans.total.toFixed(2)} CHF</td>
+   </tr>;
+
+  return (
+  <table className="table table-striped table-responsive">
     <thead className="thead-inverse">
-    <th>Von</th>
-    <th>Zu</th>
-    <th>Betrag</th>
-    <th>Kontostand Neu</th>
+      <tr>
+        <th>Von</th>
+        <th>Zu</th>
+        <th>Betrag</th>
+        <th>Kontostand Neu</th>
+      </tr>
     </thead>
-    {transactions.map(tableEntry)}
+    <tbody>
+      {props.transactions.map(tableEntry)}
+    </tbody>
   </table>
+  )
 }
 
 class LastTransactions extends React.Component {
@@ -36,13 +46,20 @@ class LastTransactions extends React.Component {
   props: Props;
 
   state: {
-    transactions: Array<Transaction>,
+    transactions: Transaction[],
+  };
+
+  state = {
+    transactions: [],
   };
 
   constructor(props) {
     super(props);
     this.props = props;
-    getTransactions(props.token).then(result => this.setState({transactions: result}));
+  }
+
+  componentDidMount() {
+    getTransactions(this.props.token).then(result => this.setState({transactions: result.result}) );
   }
 
   render() {

@@ -1,42 +1,44 @@
-<div [hidden]="submitted">
-  <h1 class="card-header">Neue Bewegung</h1>
-  <div class="card-block">
-    <form *ngIf="ownAccountDetails" (ngSubmit)="doPay(payForm)" #payForm="ngForm">
-      <div class="form-group">
-        <label for="fromAccount">Von</label>
-        <select id="fromAccount" class="form-control" disabled>
-          <option>{{ownAccountDetails.accountNr}} [{{ownAccountDetails.amount | number: '1.2-2'}} CHF]</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="toAccount">Zu</label>
-        <input type="text" class="form-control" id="toAccount" name="toAccountNr" pattern="[0-9]{7}" (change)="onSubmit(toAccount.value)"
-               placeholder="Ziel Konto Nummer" aria-describedby="toAccountHelp" ngModel required #toAccount="ngModel">
-        <small [hidden]="toAccount.valid" id="toAccountHelp" class="help-block">Bitte geben Sie die Ziel Konto Nummer ein.</small>
-        <small [hidden]="!toAccount.valid" class="help-block">{{getAccountResponse}}</small>
-      </div>
-      <div class="form-group">
-        <label class="sr-only" for="amount">Betrag (in Schweizerfranken)</label>
-        <div class="input-group">
-          <div class="input-group-addon">CHF</div>
-          <input type="text" class="form-control" id="amount" name="amount" placeholder="Betrag" pattern="[0-9]+(\.[0-9][05]?)?" ngModel required>
+<div class="card">
+  <div [hidden]="submitted">
+    <h1 class="card-header">Neue Bewegung</h1>
+    <div class="card-block">
+      <form *ngIf="ownAccountDetails" (ngSubmit)="doPay(payForm)" #payForm="ngForm">
+        <div class="form-group">
+          <label for="fromAccount">Von</label>
+          <select id="fromAccount" class="form-control" disabled>
+            <option>{{ownAccountDetails.accountNr}} [{{ownAccountDetails.amount | number: '1.2-2'}} CHF]</option>
+          </select>
         </div>
-      </div>
-      <button class="btn btn-primary" [disabled]="!payForm.form.valid || isProcessing">Zahlen</button>
-    </form>
+        <div class="form-group">
+          <label for="toAccount">Zu</label>
+          <input type="text" class="form-control" id="toAccount" name="toAccountNr" pattern="[0-9]{7}" (input)="onSubmit(toAccount.value)"
+                 placeholder="Ziel Konto Nummer" aria-describedby="toAccountHelp" ngModel required #toAccount="ngModel">
+          <small [hidden]="toAccount.valid" id="toAccountHelp" class="help-block">Bitte geben Sie die Ziel Konto Nummer ein.</small>
+          <small [hidden]="!toAccount.valid" class="help-block">{{getAccountResponse}}</small>
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="amount">Betrag (in Schweizerfranken)</label>
+          <div class="input-group">
+            <div class="input-group-addon">CHF</div>
+            <input type="text" class="form-control" id="amount" name="amount" placeholder="Betrag" pattern="[0-9]+(\.[0-9][05]?)?" ngModel required>
+          </div>
+        </div>
+        <button class="btn btn-primary" [disabled]="!payForm.form.valid || isProcessing">Zahlen</button>
+      </form>
+    </div>
   </div>
-</div>
-<div [hidden]="!submitted">
-  <h1 class="card-header">Bestätigung</h1>
-  <div class="card-block" style="margin-left: 2rem">
-    <div class="row">
-      Transaktion zu {{submitName}} war erfolgreich!
-    </div>
-    <div class="row">
-      Neuer Kontostand: {{submitBalance | number: '1.2-2'}} CHF
-    </div>
-    <div class="row" style="margin-top: 2rem">
-      <button class="btn btn-primary" (click)="submitted=false">Weitere Zahlung</button>
+  <div [hidden]="!submitted">
+    <h1 class="card-header">Bestätigung</h1>
+    <div class="card-block" style="margin-left: 2rem">
+      <div class="row">
+        Transaktion zu {{submitName}} war erfolgreich!
+      </div>
+      <div class="row">
+        Neuer Kontostand: {{submitBalance | number: '1.2-2'}} CHF
+      </div>
+      <div class="row" style="margin-top: 2rem">
+        <button class="btn btn-primary" (click)="submitted=false">Weitere Zahlung</button>
+      </div>
     </div>
   </div>
 </div>
