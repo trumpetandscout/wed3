@@ -2,7 +2,7 @@
  * Created by Joel on 31.03.2017.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 
 import {Account} from '../../shared';
@@ -10,13 +10,14 @@ import {Account} from '../../shared';
 import {AccountService, BankingService} from '../services';
 import {NewTransactionInfo, AccountDetails} from '../models';
 import {Transaction} from '../models/transaction';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'wed-new-transaction',
   templateUrl: 'new-transaction.component.html',
   styleUrls: ['new-transaction.component.scss']
 })
-export class NewTransactionComponent implements OnInit {
+export class NewTransactionComponent implements OnInit, OnDestroy {
 
   public ownAccountDetails: AccountDetails;
   public toAccountNr: number;
@@ -30,6 +31,9 @@ export class NewTransactionComponent implements OnInit {
   public isProcessing = false;
   public submitted = false;
 
+  private transactionAddedSubscription: Subscription;
+  private payFailedSubscription: Subscription;
+
   constructor(private bankSvc: BankingService, private accSvc: AccountService) {
     accSvc.getAccountDetails().subscribe(
       (data: AccountDetails) => {
@@ -39,26 +43,33 @@ export class NewTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bankSvc.transactionAdded.subscribe(
-      (transaction: Transaction) => {
-        this.accSvc.getAccount(transaction.to).subscribe(
-          (data: Account) => {
-            this.submitName = data.firstname + ' ' + data.lastname;
-            this.submitBalance = transaction.balance;
-            this.submitted = true;
-            this.isProcessing = false;
-            this.accSvc.getAccountDetails().subscribe(
-              (data: AccountDetails) => {
-                this.ownAccountDetails = data;
-              }
-            );
-          });
-      });
-    this.bankSvc.payFailed.subscribe(
+    function loadTransactionDetails(transaction: Transaction) {
+      this.accSvc.getAccount(transaction.to).subscribe(
+        (data: Account) => {
+          this.submitName = data.firstname + ' ' + data.lastname;
+          this.submitBalance = transaction.balance;
+          this.submitted = true;
+          this.isProcessing = false;
+          this.accSvc.getAccountDetails().subscribe(
+            (accDetails: AccountDetails) => {
+              this.ownAccountDetails = accDetails;
+            }
+          );
+        });
+    }
+
+    this.transactionAddedSubscription = this.bankSvc.transactionAdded.subscribe(loadTransactionDetails);
+
+    this.payFailedSubscription = this.bankSvc.payFailed.subscribe(
       () => {
         this.isProcessing = false;
-        //...
+        // ...
       });
+  }
+
+  ngOnDestroy() {
+    this.transactionAddedSubscription.unsubscribe();
+    this.payFailedSubscription.unsubscribe();
   }
 
   public onSubmit(accountNr: number): void {

@@ -6,7 +6,7 @@
         <div class="form-group">
           <label for="fromAccount">Von</label>
           <select id="fromAccount" class="form-control" disabled>
-            <option>{{ownAccountDetails.accountNr}} [{{ownAccountDetails.amount | number: '1.2-2'}} CHF]</option>
+            <option>{{ownAccountDetails?.accountNr}} [{{ownAccountDetails?.amount | number: '1.2-2'}} CHF]</option>
           </select>
         </div>
         <div class="form-group">
